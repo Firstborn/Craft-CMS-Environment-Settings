@@ -70,10 +70,9 @@ class EnvironmentSettingsPlugin extends BasePlugin
 	 */
 	function init()
 	{
-	    //add message about settings being overridden
 		if (craft()->request->isCpRequest() && craft()->userSession->isLoggedIn()) {
-            EnvironmentSettingsPlugin::log(craft()->request->getUrl() , LogLevel::Error);
 
+		    //add warning message
             $pattern = '@admin\/settings\/(email|assets\/sources)@i';
             if (preg_match($pattern, craft()->request->getUrl()))
             {

@@ -2,7 +2,6 @@
 
 namespace Craft;
 
-use \PDO;
 use \Exception;
 
 class EnvironmentSettingsService extends BaseApplicationComponent
@@ -44,10 +43,8 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 	}
 
 	private function updateAssetSource($handle, $config) {
-    // get settings from db
         $source = $this->getAssetSourceByHandle($handle);
         if ($source) {
-
             $source->name = $config['name'];
             $source->type = $config['type'];
             $settings = array_merge($source->settings, $config);
