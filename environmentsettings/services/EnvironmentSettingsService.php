@@ -25,15 +25,19 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 		try {
 			// look for both 'assetSource' and 'assetSources'
 			$assetSourceConfig = $this->getConfig('assetSource');
+			if ($assetSourceConfig) {
 
-			if (array_key_exists('handle', $assetSourceConfig)) {
-				$handle = $assetSourceConfig['handle'];
-				$this->updateAssetSource($handle, $assetSourceConfig);
-			}
-			
+                if (array_key_exists('handle', $assetSourceConfig)) {
+                    $handle = $assetSourceConfig['handle'];
+                    $this->updateAssetSource($handle, $assetSourceConfig);
+                }
+            }
+
             $assetSourcesConfig = $this->getConfig('assetSources');
-            foreach($assetSourcesConfig as $key => $assetSourceConfig){
-                $this->updateAssetSource($key, $assetSourceConfig);
+			if ($assetSourcesConfig) {
+                foreach ($assetSourcesConfig as $key => $assetSourceConfig) {
+                    $this->updateAssetSource($key, $assetSourceConfig);
+                }
             }
 		} catch (Exception $e) {
 			EnvironmentSettingsPlugin::log($e->getMessage(), LogLevel::Error);
@@ -66,14 +70,17 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 	private function updateEmailSettings()
 	{
 		try {
-            $settings = craft()->systemSettings->getSettings('email');
-            $settings = array_merge($settings, $this->getConfig('email'));
+		    $emailConfig = $this->getConfig('email');
+		    if ($emailConfig) {
+                $settings = craft()->systemSettings->getSettings('email');
+                $settings = array_merge($settings, $emailConfig);
 
-            if (craft()->systemSettings->saveSettings('email', $settings)){
+                if (craft()->systemSettings->saveSettings('email', $settings)) {
 
-            } else {
-                EnvironmentSettingsPlugin::log(json_encode($settings->getErrors()), LogLevel::Error);
-                throw new Exception('Could not update email settings');
+                } else {
+                    EnvironmentSettingsPlugin::log(json_encode($settings->getErrors()), LogLevel::Error);
+                    throw new Exception('Could not update email settings');
+                }
             }
  		} catch (Exception $e) {
 			EnvironmentSettingsPlugin::log($e->getMessage(), LogLevel::Error);
@@ -90,7 +97,7 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 		$item = craft()->config->get($item, 'environmentsettings');
 
 		if (empty($item)) {
-			throw new Exception('Could not find config item: ' . $item);
+			return false;
 		}
 
 		return $item;
