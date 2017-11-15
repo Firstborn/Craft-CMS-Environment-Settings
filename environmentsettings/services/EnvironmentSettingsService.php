@@ -28,11 +28,9 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 
 			if (array_key_exists('handle', $assetSourceConfig)) {
 				$handle = $assetSourceConfig['handle'];
-			} else {
-				throw new Exception('Asset source handle missing from environmentsettings.php');
+				$this->updateAssetSource($handle, $assetSourceConfig);
 			}
-			$this->updateAssetSource($handle, $assetSourceConfig);
-
+			
             $assetSourcesConfig = $this->getConfig('assetSources');
             foreach($assetSourcesConfig as $key => $assetSourceConfig){
                 $this->updateAssetSource($key, $assetSourceConfig);
