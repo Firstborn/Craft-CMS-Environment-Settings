@@ -1,5 +1,5 @@
 {
-    "name": "fbdev/craft-cms-environment-settings",
+    "name": "firstborn/craft-cms-environment-settings",
     "type": "package",
     "require": {}
 }
