@@ -5,7 +5,7 @@
  *
  * Override CMS settings with configuration files.
  *
- * @author    Ziad Hilal
+ * @author    Ziad Hilal, Derrick Grigg
  * @copyright Copyright (c) 2017 Firstborn
  * @link      https://www.firstborn.com
  * @package   EnvironmentSettings
