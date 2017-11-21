@@ -6,8 +6,6 @@ use \Exception;
 
 class EnvironmentSettingsService extends BaseApplicationComponent
 {
-	private $dbh = null;
-
 	/**
 	 * Override CMS Settings
 	 */
@@ -47,8 +45,14 @@ class EnvironmentSettingsService extends BaseApplicationComponent
 	private function updateAssetSource($handle, $config) {
         $source = $this->getAssetSourceByHandle($handle);
         if ($source) {
-            $source->name = $config['name'];
-            $source->type = $config['type'];
+            if (key_exists('name', $config)){
+                $source->name = $config['name'];
+            }
+
+            if (key_exists('type', $config)){
+                $source->type = $config['type'];
+            }
+            
             $settings = array_merge($source->settings, $config);
             $source->settings = $settings;
 
