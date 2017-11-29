@@ -52,7 +52,7 @@ class EnvironmentSettingsService extends BaseApplicationComponent
             if (key_exists('type', $config)){
                 $source->type = $config['type'];
             }
-            
+
             $settings = array_merge($source->settings, $config);
             $source->settings = $settings;
 
